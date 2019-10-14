@@ -1,0 +1,26 @@
+{
+  "name": "TagChatter",
+  "private": true,
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "morgan": "^1.9.0",
+    "ramda": "^0.24.1",
+    "ramda-fantasy": "^0.8.0",
+    "random-js": "^1.0.8",
+    "swagger-ui-express": "^2.0.8",
+    "titleize": "^1.0.0",
+    "uuid": "^3.1.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "~7"
+  }
+}
