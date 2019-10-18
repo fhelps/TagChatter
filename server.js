@@ -25,73 +25,49 @@ const toId = id => String(id);
 const app = express();
 
 const buildUser = ({ id, name, avatar } = {}) => {
-  const userId = isPresent(id) ? toId(id) : uuid();
+    const userId = isPresent(id) ? toId(id) : uuid();
 
-  return {
-    id: userId,
-    name: name || titleize(faker.fake("{{hacker.adjective}} {{name.firstName}}")),
-    avatar: avatar || `https://robohash.org/bgset_any/size_100x100/${userId}.png`,
-  };
+    return {
+        id: userId,
+        name: name || titleize(faker.fake("{{hacker.adjective}} {{name.firstName}}")),
+        avatar: avatar || `https://robohash.org/bgset_any/size_100x100/${userId}.png`,
+    };
 };
 
 const buildMessage = ({ id, content, author, created_at, has_parrot } = {}) => ({
-  id: isPresent(id) ? toId(id) : uuid(),
-  content: content || faker.hacker.phrase(),
-  author: buildUser(author),
-  created_at: created_at || faker.date.past(),
-  has_parrot: isPresent(has_parrot) ? has_parrot : false,
+    id: isPresent(id) ? toId(id) : uuid(),
+    content: content || faker.hacker.phrase(),
+    author: buildUser(author),
+    created_at: created_at || faker.date.past(),
+    has_parrot: isPresent(has_parrot) ? has_parrot : false,
 });
 
 const users = [
-  "laverne_jacobi11",
-  "noelia_christiansen",
-  "kevin_heaney",
-  "ulises.rath",
-  "mona_mueller",
-  "elinor.klein17",
-  "gunnar_gerhold",
-  "ramona_davis74",
-  "gerald47",
-  "kieran56",
-]
-  .map(id => buildUser({ id }));
+        "laverne_jacobi11",
+        "noelia_christiansen",
+        "kevin_heaney",
+        "ulises.rath",
+        "mona_mueller",
+        "elinor.klein17",
+        "gunnar_gerhold",
+        "ramona_davis74",
+        "gerald47",
+        "kieran56",
+    ]
+    .map(id => buildUser({ id }));
 
-let messages = [
-  {
-    "id": "4d2fdaae-0ca0-4801-bec8-2f0f37d40aaa",
-    "content": "If we reboot the bandwidth, we can get to the SCSI pixel through the auxiliary SMS monitor!",
-    "author": {
-      "id": "gerald47",
-      "name": "Primary Lamar",
-      "avatar": "https://robohash.org/bgset_any/size_100x100/gerald47.png"
-    },
-    "created_at": "2019-10-14T00:23:36.216Z",
-    "has_parrot": false
-  },
-  {
-    "id": "c85bf4ae-b649-4059-82f7-308649d779f2",
-    "content": "We need to hack the open-source AI hard drive!",
-    "author": {
-      "id": "kevin_heaney",
-      "name": "Open-Source Herman",
-      "avatar": "https://robohash.org/bgset_any/size_100x100/kevin_heaney.png"
-    },
-    "created_at": "2019-10-14T00:23:38.216Z",
-    "has_parrot": false
-  },
-  {
-    "id": "7d4418a8-bb22-450d-9896-f2eaa4186db4",
-    "content": "We need to back up the back-end PNG capacitor!",
-    "author": {
-      "id": "ramona_davis74",
-      "name": "Primary Gwendolyn",
-      "avatar": "https://robohash.org/bgset_any/size_100x100/ramona_davis74.png"
-    },
-    "created_at": "2019-10-14T00:23:40.217Z",
-    "has_parrot": false
-  }
-]
-  .map(message => buildMessage(message));
+let messages = [{
+        "id": "4d2fdaae-0ca0-4801-bec8-2f0f37d40aaa",
+        "content": "Bem vindo ao tagChatter!",
+        "author": {
+            "id": "gerald47",
+            "name": "Primary Lamar",
+            "avatar": "https://robohash.org/bgset_any/size_100x100/gerald47.png"
+        },
+        "created_at": "2019-10-14T00:23:36.216Z",
+        "has_parrot": false
+    }]
+    .map(message => buildMessage(message));
 
 // let messages = times(() => buildMessage({ author: faker.random.arrayElement(users) }), 5)
 //   .sort((a, b) => b.created_at - a.created_at);
@@ -111,75 +87,75 @@ app.get("/me", (req, res) => res.json(faker.random.arrayElement(users)));
 app.get("/users", (req, res) => res.json(users));
 
 app.get("/messages", (req, res) => {
-  const id = toId(req.params.id);
+    const id = toId(req.params.id);
 
-  res.status(200).json(takeLast(messagesLimit, messages));
+    res.status(200).json(takeLast(messagesLimit, messages));
 });
 
 app.post("/messages", (req, res) => {
-  const userId = toId(req.body.author_id);
-  const user = users.find(propEq("id", userId));
-  const shouldSucceed = /true/i.test(req.query.stable) || random.bool(successPercentage)(random.engines.nativeMath)
+    const userId = toId(req.body.author_id);
+    const user = users.find(propEq("id", userId));
+    const shouldSucceed = /true/i.test(req.query.stable) || random.bool(successPercentage)(random.engines.nativeMath)
 
-  if (all(isPresent, [user, req.body.message])) {
-    if (shouldSucceed) {
-      const message = buildMessage({ content: req.body.message, author: user, created_at: new Date() });
-      messages.push(message);
-      res.json(message);
-    } else {
-      res.status(500).json({ type: "internal_error", error: "Unexpected error" });
+    if (all(isPresent, [user, req.body.message])) {
+        if (shouldSucceed) {
+            const message = buildMessage({ content: req.body.message, author: user, created_at: new Date() });
+            messages.push(message);
+            res.json(message);
+        } else {
+            res.status(500).json({ type: "internal_error", error: "Unexpected error" });
+        }
+    } else if (isBlank(req.body.message)) {
+        res.status(400).json({
+            type: "missing_property",
+            error: 'Property "message" is required',
+            properties: ["message"],
+        });
+    } else if (isBlank(req.body.author_id)) {
+        res.status(400).json({
+            type: "missing_property",
+            error: 'Property "author_id" is required',
+            properties: ["author_id"],
+        });
+    } else if (isBlank(user)) {
+        res.status(404).json({ type: "user_not_found", error: "User not found", user: userId });
     }
-  } else if (isBlank(req.body.message)) {
-    res.status(400).json({
-      type: "missing_property",
-      error: 'Property "message" is required',
-      properties: ["message"],
-    });
-  } else if (isBlank(req.body.author_id)) {
-    res.status(400).json({
-      type: "missing_property",
-      error: 'Property "author_id" is required',
-      properties: ["author_id"],
-    });
-  } else if (isBlank(user)) {
-    res.status(404).json({ type: "user_not_found", error: "User not found", user: userId });
-  }
 });
 
 app.put("/messages/:id/parrot", (req, res) => {
-  const id = toId(req.params.id);
-  const message = messages.find(propEq("id", id));
+    const id = toId(req.params.id);
+    const message = messages.find(propEq("id", id));
 
-  if (isPresent(message)) {
-    const messageWithParrot = buildMessage(merge(message, { has_parrot: true }));
+    if (isPresent(message)) {
+        const messageWithParrot = buildMessage(merge(message, { has_parrot: true }));
 
-    messages = messages.map(message => message.id === id ? messageWithParrot : message);
+        messages = messages.map(message => message.id === id ? messageWithParrot : message);
 
-    res.json(messageWithParrot);
-  } else {
-    res.status(404).json({ type: "message_not_found", error: "Message not found", message: id });
-  }
+        res.json(messageWithParrot);
+    } else {
+        res.status(404).json({ type: "message_not_found", error: "Message not found", message: id });
+    }
 });
 
 app.put("/messages/:id/unparrot", (req, res) => {
-  const id = toId(req.params.id);
-  const message = messages.find(propEq("id", id));
+    const id = toId(req.params.id);
+    const message = messages.find(propEq("id", id));
 
-  if (isPresent(message)) {
-    const messageWithoutParrot = buildMessage(merge(message, { has_parrot: false }));
+    if (isPresent(message)) {
+        const messageWithoutParrot = buildMessage(merge(message, { has_parrot: false }));
 
-    messages = messages.map(message => message.id === id ? messageWithoutParrot : message);
+        messages = messages.map(message => message.id === id ? messageWithoutParrot : message);
 
-    res.json(messageWithoutParrot);
-  } else {
-    res.status(404).json({ type: "message_not_found", error: "Message not found", message: id });
-  }
+        res.json(messageWithoutParrot);
+    } else {
+        res.status(404).json({ type: "message_not_found", error: "Message not found", message: id });
+    }
 });
 
 app.get("/messages/parrots-count", (req, res) => {
-  const parrotsCount = messages.filter(propEq("has_parrot", true)).length;
+    const parrotsCount = messages.filter(propEq("has_parrot", true)).length;
 
-  res.json(parrotsCount);
+    res.json(parrotsCount);
 });
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiDocs));
