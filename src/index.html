@@ -1,69 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>TagChatter</title>
 
+<head>
+    <title>TagChatter</title>
     <link rel="stylesheet" type="text/css" href="reset.css">
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Lato" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   
-   
-   
+</head>
 
-  </head>
-
-  <body class="wrapper">
+<body class="wrapper">
     <aside class="sidebar">
-      <div class="sidebar__logo">
-        <img src="images/logo.png" />
-      </div>
-    </aside>
-
-      <div class="content">
-        <header class="header">
-          <h1 class="header__title">#tagchatter</h1>
-
-          <div class="header__parrots-count">
-            <span class="header__title" id="parrots-counter">-</span>
-          </div>
-        </header>
-
-          <div id="message-body" class="container ">
-          
-          </div>
-
-        <div class="container chat-input">
-          <div class="row row align-items-center">
-            <div id="user-name" hidden >
-                
-            </div>
-            <div class="col-1">
-              <img id="user-avatar" class="me" src="" alt="">
-            </div>
-            <div  class="col-10">
-                <input id="message-text" type="text" class="form-control" >
-            </div>
-            <div class="col-1">
-                <button id="send-message" type="button" style="padding-top: 0px;" class="btn ">
-                    <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
-                      <path fill="#263238" fill-opacity=".45" d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z">
-                      </path>
-                    </svg>
-                </button>
-            </div>
-          </div>
+        <div class="sidebar__logo">
+            <img src="images/logo.png" />
         </div>
-
-      </div>
-
+    </aside>
+    <div class="content">
+        <header class="header">
+            <h1 class="header__title">#tagchatter</h1>
+            <div class="header__parrots-count">
+                <span class="header__title" id="parrots-counter">-</span>
+            </div>
+        </header>
+        <div id="message-body" class="container">
+        </div>
+        <div class="container chat-input">
+            <div class="row row align-items-center">
+                <div id="user-name" hidden>
+                </div>
+                <div class="col-1">
+                    <img id="user-avatar" class="me" src="" alt="">
+                </div>
+                <div class="col-10">
+                    <input id="message-text" type="text" class="form-control">
+                </div>
+                <div class="col-1">
+                    <button id="send-message" type="button" style="padding-top: 0px;" class="btn ">
+            <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
+              <path fill="#263238" fill-opacity=".45"
+                d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z">
+              </path>
+            </svg>
+          </button>
+                </div>
+            </div>
+        </div>
     </div>
-  </body>
-    
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/46014de28c.js" crossorigin="anonymous"></script>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/46014de28c.js" crossorigin="anonymous"></script>
+<script src="index.js"></script>
 
-  <script src="index.js"></script>
 </html>
